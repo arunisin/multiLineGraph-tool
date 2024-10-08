@@ -3,5 +3,9 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "noUnusedLocals": false, // Set to true to enable errors for unused locals
+    "noUnusedParameters": false // Set to true to enable errors for unused function parameters
+  }
 }

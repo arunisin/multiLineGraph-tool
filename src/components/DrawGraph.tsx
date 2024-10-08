@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import ChartProps from "./ChartProps";
 import LineProps from "./LineProps";
