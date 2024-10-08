@@ -64,7 +64,7 @@ const LineProps: FC<LineProps> = ({ lineKey }) => {
 
   return (
     <div className="" style={{ display: "flex", flexDirection: "column" }}>
-      <div>graph-{lineKey}</div>
+      <div>values for {lineKey}</div>
       <table>
         <tbody>
           {/* Render the input fields for changing the values in the keyData.vals array */}
@@ -85,11 +85,13 @@ const LineProps: FC<LineProps> = ({ lineKey }) => {
             {/* Button to add a new value to the vals array */}
             <td>
               <button onClick={() => handleValueChange(keyData.vals.length, 0)}>
-                Add Value
+                Add more Graph Value
               </button>
             </td>
           </tr>
           {/* Input fields for stroke color and stroke width */}
+          <hr style={{ opacity: ".3" }} />
+          <div>Graph props</div>
           <tr>
             <td>
               <label>Stroke Color: </label>

@@ -18,7 +18,7 @@ const DrawGraph = () => {
         ...prevData,
         {
           key: newLineKey,
-          vals: [], // Start with an empty array
+          vals: [0], // Start with an empty array
           strokeColor: "#000000", // Optional default stroke color
           strokeWidth: 2, // Optional default stroke width
         },
@@ -27,7 +27,13 @@ const DrawGraph = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row", // Default to row for larger screens
+        flexWrap: "wrap",
+      }}
+    >
       <div
         style={{
           border: "1px solid #333",
@@ -67,45 +73,52 @@ const DrawGraph = () => {
         </div>
       </div>
 
-      {/* LineProps for each line */}
-      <h2>Add a line</h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "20px",
-        }}
-      >
-        {lines.map((lineKey) => (
-          <div style={{ padding: "20px 0" }} key={lineKey}>
-            <h3>Values for {lineKey}</h3>
-            <LineProps lineKey={lineKey} />
-          </div>
-        ))}
-      </div>
-
-      {/* Input to add a new line */}
-      <div style={{ marginTop: "20px", display: "flex", alignItems: "center" }}>
-        <input
-          type="text"
-          placeholder="Enter new line key"
-          value={newLineKey}
-          onChange={(e) => setNewLineKey(e.target.value)}
-          style={{ padding: "10px", marginRight: "10px", flex: "1" }}
-        />
-        <button
-          onClick={handleAddLine}
-          disabled={!newLineKey.trim()} // Disable if input is empty
+      <div style={{ padding: "10px" }}>
+        <h2>Line data</h2>
+        {/* LineProps for each line */}
+        <div
           style={{
-            padding: "10px 20px",
-            backgroundColor: newLineKey.trim() ? "#4CAF50" : "#ccc",
-            color: "#fff",
-            border: "none",
-            cursor: newLineKey.trim() ? "pointer" : "not-allowed",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+            gap: "20px",
           }}
         >
-          Add New Line
-        </button>
+          {lines.map((lineKey) => (
+            <div
+              style={{ padding: "20px 0", border: "1px solid gray" }}
+              key={lineKey}
+            >
+              {/* <h3>Values for {lineKey}</h3> */}
+              <LineProps lineKey={lineKey} />
+            </div>
+          ))}
+        </div>
+
+        {/* Input to add a new line */}
+        <div
+          style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        >
+          <input
+            type="text"
+            placeholder="Enter new line key"
+            value={newLineKey}
+            onChange={(e) => setNewLineKey(e.target.value)}
+            style={{ padding: "10px", marginRight: "10px", flex: "1" }}
+          />
+          <button
+            onClick={handleAddLine}
+            disabled={!newLineKey.trim()} // Disable if input is empty
+            style={{
+              padding: "10px 20px",
+              backgroundColor: newLineKey.trim() ? "#4CAF50" : "#ccc",
+              color: "#fff",
+              border: "none",
+              cursor: newLineKey.trim() ? "pointer" : "not-allowed",
+            }}
+          >
+            Add New Line
+          </button>
+        </div>
       </div>
     </div>
   );
