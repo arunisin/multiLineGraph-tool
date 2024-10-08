@@ -6,8 +6,6 @@ interface LineProps {
 }
 
 const LineProps: FC<LineProps> = ({ lineKey }) => {
-  console.log("Line props rendered");
-
   const { data, setData } = useDataContext();
 
   // Find the data corresponding to the provided lineKey

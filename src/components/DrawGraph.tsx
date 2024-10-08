@@ -46,6 +46,12 @@ const DrawGraph = () => {
                   dataKey={lineKey}
                   stroke={lineData.strokeColor || "#8884d8"}
                   strokeWidth={lineData.strokeWidth || 2}
+                  dot={{
+                    stroke: lineData.strokeColor,
+                    strokeWidth: 2,
+                    fill: lineData.strokeColor,
+                    r: 5,
+                  }}
                 />
               )
             );

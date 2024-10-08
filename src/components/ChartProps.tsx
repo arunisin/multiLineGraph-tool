@@ -1,4 +1,4 @@
-import { ComponentProps, FC, useState } from "react";
+import { ComponentProps, FC, useRef, useState } from "react";
 import { CartesianGrid, LineChart } from "recharts";
 import { useDataContext } from "./dataContext";
 
@@ -25,6 +25,39 @@ const ChartProps: FC<ComponentProps<"div">> = ({ children, ...props }) => {
   const [height, setHeight] = useState(700);
   const [color, setColor] = useState("#ccc");
   const { data } = useDataContext();
+  const chartContainerRef = useRef<HTMLDivElement>(null); // Reference to the container div
+
+  // Function to download the SVG
+  const handleExportSVG = () => {
+    const chartContainer = chartContainerRef.current;
+
+    if (!chartContainer) {
+      return;
+    }
+
+    // Find the actual SVG element inside the Recharts rendered content
+    const svgElement = chartContainer.querySelector("svg");
+    if (!svgElement) {
+      console.error("SVG element not found!");
+      return;
+    }
+
+    // Serialize the SVG and create a Blob
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+
+    // Create a download link and trigger the download
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "graph-export.svg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Release the object URL
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div {...props}>
@@ -57,14 +90,20 @@ const ChartProps: FC<ComponentProps<"div">> = ({ children, ...props }) => {
           />
         </div>
       </div>
-      <LineChart
-        width={width}
-        height={height}
-        data={convertToRechartsData(data)}
-      >
-        <CartesianGrid stroke={color} />
-        {children}
-      </LineChart>
+      <div ref={chartContainerRef}>
+        <LineChart
+          width={width}
+          height={height}
+          data={convertToRechartsData(data)}
+        >
+          <CartesianGrid stroke={color} />
+          {children}
+        </LineChart>
+      </div>
+
+      <button onClick={handleExportSVG} style={{ marginTop: "20px" }}>
+        Export as SVG
+      </button>
     </div>
   );
 };
